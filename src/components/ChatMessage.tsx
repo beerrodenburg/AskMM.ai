@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import ReactMarkdown from 'react-markdown';
 
 interface ChatMessageProps {
   role: 'user' | 'assistant';
@@ -25,7 +26,13 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
             : 'bg-white text-[#262626] border border-[#e5e5e5] rounded-[20px] rounded-tl-[6px] shadow-softer'
         )}
       >
-        <p className="whitespace-pre-wrap break-words">{content}</p>
+        {isUser ? (
+          <p className="whitespace-pre-wrap break-words">{content}</p>
+        ) : (
+          <div className="prose prose-sm max-w-none prose-p:my-2 prose-headings:my-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-0.5">
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </div>
+        )}
       </div>
     </div>
   );
