@@ -4,7 +4,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { ChatMessage } from './ChatMessage';
 import { ChatInput } from './ChatInput';
 import { StarterPrompts } from './StarterPrompts';
-import { TypingIndicator } from './TypingIndicator';
+import { LoadingStatus } from './LoadingStatus';
 
 interface Message {
   id: string;
@@ -127,7 +127,7 @@ export function Chat() {
                 />
               ))}
 
-              {isLoading && <TypingIndicator />}
+              {isLoading && <LoadingStatus />}
 
               {error && (
                 <div className="flex justify-center animate-fade-in">

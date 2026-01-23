@@ -5,8 +5,8 @@ interface StarterPromptsProps {
 }
 
 const PROMPTS = [
-  'How did AW learn to do light blasts?',
-  'Squirrels?',
+  'What does AW say about healing vitiligo?',
+  'AW doing the robot dance',
   'What does AW say about AI?',
   'How to avoid bird flu?',
 ];
