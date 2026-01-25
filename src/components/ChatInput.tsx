@@ -60,7 +60,7 @@ export function ChatInput({ value, onChange, onSend, disabled = false }: ChatInp
             onKeyDown={handleKeyDown}
             disabled={disabled}
             placeholder="Ask me anything about Medical Medium..."
-            className="w-full px-5 py-3 bg-surface-secondary rounded-full text-foreground text-[15px] placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-sage-500/20 transition-shadow duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full px-5 py-3 bg-surface-secondary rounded-full text-foreground text-base placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-sage-500/20 transition-shadow duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
             aria-label="Message input"
           />
         </div>
