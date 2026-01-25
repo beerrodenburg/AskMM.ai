@@ -152,6 +152,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Prose/Typography dark mode overrides */
+.prose {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-links: var(--sage-500);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--muted);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-code: var(--foreground);
+}
+
 /* Custom scrollbar for webkit browsers */
 ::-webkit-scrollbar {
   width: 6px;

@@ -29,7 +29,7 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
         {isUser ? (
           <p className="whitespace-pre-wrap break-words">{content}</p>
         ) : (
-          <div className="prose prose-sm max-w-none prose-p:my-2 prose-headings:my-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-0.5">
+          <div className="prose prose-sm max-w-none prose-p:my-2 prose-headings:my-3 prose-ul:my-2 prose-ol:my-2 prose-li:my-0.5 prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-li:text-foreground prose-a:text-sage-500 prose-a:no-underline hover:prose-a:underline">
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
         )}
