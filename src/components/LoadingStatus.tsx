@@ -30,23 +30,23 @@ export function LoadingStatus() {
 
   return (
     <div className="flex justify-start w-full animate-fade-in">
-      <div className="flex items-center gap-3 px-4 py-3 bg-white border border-[#e5e5e5] rounded-[20px] rounded-tl-[6px] shadow-softer">
+      <div className="flex items-center gap-3 px-4 py-3 bg-surface border border-neutral-200 rounded-[20px] rounded-tl-[6px] shadow-softer">
         <div className="flex gap-1">
           <span
-            className="w-1.5 h-1.5 bg-[#10B981] rounded-full animate-pulse-soft"
+            className="w-1.5 h-1.5 bg-sage-500 rounded-full animate-pulse-soft"
             style={{ animationDelay: '0ms' }}
           />
           <span
-            className="w-1.5 h-1.5 bg-[#10B981] rounded-full animate-pulse-soft"
+            className="w-1.5 h-1.5 bg-sage-500 rounded-full animate-pulse-soft"
             style={{ animationDelay: '150ms' }}
           />
           <span
-            className="w-1.5 h-1.5 bg-[#10B981] rounded-full animate-pulse-soft"
+            className="w-1.5 h-1.5 bg-sage-500 rounded-full animate-pulse-soft"
             style={{ animationDelay: '300ms' }}
           />
         </div>
         <span
-          className={`text-sm text-[#525252] transition-opacity duration-200 ${
+          className={`text-sm text-muted transition-opacity duration-200 ${
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >

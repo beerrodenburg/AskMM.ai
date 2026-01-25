@@ -22,8 +22,8 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
         className={clsx(
           'max-w-[80%] px-4 py-3 text-[15px] leading-[1.6]',
           isUser
-            ? 'bg-[#10B981] text-white rounded-[20px] rounded-tr-[6px]'
-            : 'bg-white text-[#262626] border border-[#e5e5e5] rounded-[20px] rounded-tl-[6px] shadow-softer'
+            ? 'bg-sage-500 text-white rounded-[20px] rounded-tr-[6px]'
+            : 'bg-surface text-foreground border border-neutral-200 rounded-[20px] rounded-tl-[6px] shadow-softer'
         )}
       >
         {isUser ? (

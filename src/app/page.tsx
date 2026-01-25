@@ -3,7 +3,7 @@ import { Chat } from '@/components/Chat';
 
 export default function Home() {
   return (
-    <main className="flex flex-col h-[100dvh] bg-[#fafafa]">
+    <main className="flex flex-col h-[100dvh] bg-background">
       <Header />
       <Chat />
     </main>
