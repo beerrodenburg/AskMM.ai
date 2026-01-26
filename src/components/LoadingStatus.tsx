@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 const STATUS_MESSAGES = [
-  "Searching through AW's livestreams for you…",
+  "Searching through AW's content for you…",
   'Analyzing relevant discussions…',
   'Finding the best answer…',
   'Preparing your response…',

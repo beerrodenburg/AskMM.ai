@@ -19,7 +19,7 @@ export function StarterPrompts({ onSelect }: StarterPromptsProps) {
           Welcome to AskMM.ai
         </h2>
         <p className="text-muted text-[15px]">
-          Ask questions and receive answers sourced directly from Medical Medium livestream discussions
+          Ask questions and receive answers sourced directly from Medical Medium's YouTube content
         </p>
       </div>
 
