@@ -208,3 +208,19 @@ body {
 .shadow-softer {
   box-shadow: var(--shadow-softer);
 }
+
+/* PWA Standalone Mode Adjustments */
+@media all and (display-mode: standalone) {
+  /* Add padding for iOS status bar in standalone mode */
+  body {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Safe area handling for notch devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
