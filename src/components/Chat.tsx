@@ -110,13 +110,11 @@ export function Chat() {
     <div className="flex flex-col flex-1 overflow-hidden">
       <div
         ref={messagesContainerRef}
-        className="flex-1 overflow-y-auto"
+        className={`flex-1 overflow-y-auto ${showWelcome ? 'flex flex-col justify-center' : ''}`}
       >
-        <div className="max-w-3xl mx-auto px-4 py-6">
+        <div className={`max-w-3xl mx-auto px-4 ${showWelcome ? 'py-4' : 'py-6'}`}>
           {showWelcome ? (
-            <div className="flex items-center justify-center min-h-[60vh]">
-              <StarterPrompts onSelect={handleStarterSelect} />
-            </div>
+            <StarterPrompts onSelect={handleStarterSelect} />
           ) : (
             <div className="flex flex-col gap-4" role="log" aria-live="polite">
               {messages.map((message) => (
