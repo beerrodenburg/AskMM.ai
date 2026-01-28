@@ -110,7 +110,7 @@ export function Chat() {
     <div className="flex flex-col flex-1 overflow-hidden">
       <div
         ref={messagesContainerRef}
-        className={`flex-1 overflow-y-auto ${showWelcome ? 'flex flex-col justify-center' : ''}`}
+        className={`flex-1 ${showWelcome ? 'overflow-hidden flex flex-col justify-center' : 'overflow-y-auto'}`}
       >
         <div className={`max-w-3xl mx-auto px-4 ${showWelcome ? 'py-4' : 'py-6'}`}>
           {showWelcome ? (
