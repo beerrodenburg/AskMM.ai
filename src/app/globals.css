@@ -212,7 +212,7 @@ body {
 /* PWA Standalone Mode Adjustments */
 @media all and (display-mode: standalone) {
   /* Add padding for iOS status bar in standalone mode */
-  body {
+  header {
     padding-top: env(safe-area-inset-top);
   }
 }
