@@ -215,6 +215,15 @@ body {
   header {
     padding-top: env(safe-area-inset-top);
   }
+
+  /* Disable iOS rubber-band bounce effect */
+  html, body {
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /* Safe area handling for notch devices */
