@@ -37,8 +37,8 @@ const withPWA = withPWAInit({
       },
     },
     {
-      // Vercel analytics - don't cache
-      urlPattern: /^https:\/\/.*\.vercel-analytics\.com\/.*/i,
+      // Vercel analytics and speed insights - don't cache
+      urlPattern: /^https:\/\/.*\.vercel-(analytics|insights)\.com\/.*/i,
       handler: "NetworkOnly",
     },
     {
