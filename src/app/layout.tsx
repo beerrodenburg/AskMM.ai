@@ -22,14 +22,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "AskMM — Search Medical Medium Content",
+  title: "AskMM.ai — Search Medical Medium Content",
   description:
     "Search Medical Medium's YouTube library with AI. Find specific video segments about health topics with timestamped sources.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "AskMM",
+    title: "AskMM.ai",
   },
   icons: {
     icon: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "AskMM — Search Medical Medium Content",
+    title: "AskMM.ai — Search Medical Medium Content",
     description:
       "Search Medical Medium's YouTube library with AI. Find specific video segments with timestamped sources.",
     type: "website",
