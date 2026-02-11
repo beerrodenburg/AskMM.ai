@@ -14,9 +14,9 @@ const SUGGESTED_QUERIES = [
   "Heavy metal detox smoothie",
   "Celery juice benefits",
   "Healing Epstein-Barr virus",
-  "Liver rescue morning routine",
+  "What does AW say about dreams?",
   "Foods that heal the thyroid",
-  "Chronic fatigue causes",
+  "How long does it take to heal eczema?",
 ];
 
 type SearchState = "idle" | "loading" | "results" | "empty" | "error";
@@ -71,11 +71,12 @@ export default function Home() {
           {!isCompact && (
             <div className="text-center mb-8 animate-[fadeIn_0.4s_ease-out]">
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--foreground)] mb-3">
-                Search Medical Medium
+                Search every Medical Medium video, instantly
               </h1>
               <p className="text-base text-[var(--muted)] max-w-md mx-auto">
-                Find specific moments in Anthony William&apos;s YouTube videos.
-                Ask a question, get timestamped answers.
+                Ask a health question and get answers pulled directly from
+                Anthony William&apos;s YouTube videos &mdash; with timestamps
+                so you can hear it yourself.
               </p>
             </div>
           )}

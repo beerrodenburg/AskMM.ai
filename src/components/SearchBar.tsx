@@ -1,7 +1,7 @@
 "use client";
 
 import { type FormEvent } from "react";
-import { Search } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 
 interface SearchBarProps {
   value: string;
@@ -40,9 +40,17 @@ export function SearchBar({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
-          className="w-full pl-12 pr-4 py-3.5 text-base bg-[var(--surface)] text-[var(--foreground)] placeholder:text-[var(--muted)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full pl-12 pr-12 py-3.5 text-base bg-[var(--surface)] text-[var(--foreground)] placeholder:text-[var(--muted)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Search query"
         />
+        <button
+          type="submit"
+          disabled={disabled || !value.trim()}
+          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-primary-500 text-white hover:bg-primary-600 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          aria-label="Search"
+        >
+          <ArrowRight size={18} />
+        </button>
       </div>
     </form>
   );
