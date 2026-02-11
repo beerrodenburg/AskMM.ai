@@ -11,11 +11,11 @@ import { PWAProvider } from "@/components/PWAProvider";
 import type { SearchResult } from "@/lib/types";
 
 const SUGGESTED_QUERIES = [
-  "Heavy metal detox smoothie",
-  "Celery juice benefits",
-  "Healing Epstein-Barr virus",
+  "How to heal cold sore",
+  "AW robot dance",
+  "What did AW say about bird flu",
   "What does AW say about dreams?",
-  "Foods that heal the thyroid",
+  "Does he say anything about garlic?",
   "How long does it take to heal eczema?",
 ];
 
