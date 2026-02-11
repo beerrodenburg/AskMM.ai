@@ -6,3 +6,8 @@ export interface SearchResult {
   summary: string;
   channelName?: string;
 }
+
+export interface SearchResponse {
+  answerSummary?: string;
+  results: SearchResult[];
+}
