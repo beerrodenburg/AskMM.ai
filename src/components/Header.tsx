@@ -1,9 +1,17 @@
 import Link from "next/link";
 
-export function Header() {
+interface HeaderProps {
+  onLogoClick?: () => void;
+}
+
+export function Header({ onLogoClick }: HeaderProps) {
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)]">
-      <Link href="/" className="flex items-center group">
+      <Link
+        href="/"
+        onClick={onLogoClick}
+        className="flex items-center group"
+      >
         <span className="text-lg font-semibold tracking-tight text-[var(--foreground)]">
           Ask<span className="text-primary-500">MM</span>.ai
         </span>

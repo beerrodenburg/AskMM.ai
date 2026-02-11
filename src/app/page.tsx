@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <PWAProvider>
     <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
-      <Header />
+      <Header onLogoClick={() => { setState("idle"); setQuery(""); setResults([]); }} />
 
       <main className="flex-1 flex flex-col">
         {/* Hero / search area */}
