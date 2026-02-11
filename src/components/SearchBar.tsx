@@ -15,7 +15,7 @@ export function SearchBar({
   value,
   onChange,
   onSearch,
-  placeholder = "Search Medical Medium content\u2026",
+  placeholder = "Ask anything about Medical Medium\u2026",
   disabled = false,
 }: SearchBarProps) {
   function handleSubmit(e: FormEvent) {
