@@ -23,21 +23,17 @@ export function usePWAInstall(): PWAInstallState {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    // Detect iOS (iPhone, iPad, iPod)
     const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) &&
                 !(window as unknown as { MSStream?: unknown }).MSStream;
     setIsIOS(iOS);
 
-    // Detect Android
     const android = /Android/.test(navigator.userAgent);
     setIsAndroid(android);
 
-    // Detect if running as standalone PWA
     const standalone = window.matchMedia('(display-mode: standalone)').matches ||
                        (navigator as unknown as { standalone?: boolean }).standalone === true;
     setIsStandalone(standalone);
 
-    // Check if should show iOS prompt
     if (iOS && !standalone) {
       const dismissedAt = localStorage.getItem(IOS_PROMPT_DISMISSED_KEY);
       if (dismissedAt) {
@@ -45,10 +41,9 @@ export function usePWAInstall(): PWAInstallState {
         const now = new Date();
         const daysSinceDismiss = (now.getTime() - dismissedDate.getTime()) / (1000 * 60 * 60 * 24);
         if (daysSinceDismiss < DISMISS_DURATION_DAYS) {
-          return; // Don't show prompt yet
+          return;
         }
       }
-      // Small delay before showing prompt for better UX
       const timer = setTimeout(() => setShowIOSPrompt(true), 2000);
       return () => clearTimeout(timer);
     }

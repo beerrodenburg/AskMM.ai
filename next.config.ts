@@ -14,7 +14,7 @@ const withPWA = withPWAInit({
         cacheName: "google-fonts",
         expiration: {
           maxEntries: 4,
-          maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year
+          maxAgeSeconds: 365 * 24 * 60 * 60,
         },
       },
     },
@@ -32,26 +32,21 @@ const withPWA = withPWAInit({
         cacheName: "images",
         expiration: {
           maxEntries: 64,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+          maxAgeSeconds: 30 * 24 * 60 * 60,
         },
       },
     },
     {
-      // Vercel analytics - don't cache
       urlPattern: /^https:\/\/.*\.vercel-analytics\.com\/.*/i,
       handler: "NetworkOnly",
     },
     {
-      // API calls - don't cache
       urlPattern: /\/api\/.*/i,
       handler: "NetworkOnly",
     },
   ],
 });
 
-const nextConfig: NextConfig = {
-  // Allow webpack config from next-pwa while using Turbopack for dev
-  turbopack: {},
-};
+const nextConfig: NextConfig = {};
 
 export default withPWA(nextConfig);

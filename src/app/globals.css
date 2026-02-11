@@ -1,136 +1,290 @@
+/* ============================================================
+   AskMM.ai v2 — Brand System
+   Modern & Minimal · Content-Forward · Health/Wellness Search
+   ============================================================ */
+
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-:root {
-  --background: #fafafa;
-  --foreground: #262626;
+/* ============================================================
+   1. COLOR PALETTE
+   ============================================================
+   Primary: Teal-Emerald — authoritative, natural, trustworthy
+   Neutral: Cool slate — modern, clean, recedes behind content
+   Accent:  Warm amber — sparingly used for highlights & badges
+   ============================================================ */
 
-  /* Sage Green palette */
-  --sage-50: #f0fdf4;
-  --sage-100: #dcfce7;
-  --sage-200: #bbf7d0;
-  --sage-300: #86efac;
-  --sage-400: #4ade80;
-  --sage-500: #10B981;
-  --sage-600: #059669;
-  --sage-700: #047857;
-  --sage-800: #065f46;
-  --sage-900: #064e3b;
+@theme inline {
+  /* --- Primary: Teal-Emerald --- */
+  --color-primary-50:  #EFFDF6;
+  --color-primary-100: #D9FBE8;
+  --color-primary-200: #B5F5D3;
+  --color-primary-300: #7CEAB4;
+  --color-primary-400: #3DD68E;
+  --color-primary-500: #15A06F;
+  --color-primary-600: #0A8259;
+  --color-primary-700: #086847;
+  --color-primary-800: #09523A;
+  --color-primary-900: #084431;
+  --color-primary-950: #03271B;
 
-  /* Neutral palette */
-  --neutral-50: #fafafa;
-  --neutral-100: #f5f5f5;
-  --neutral-150: #ededed;
-  --neutral-200: #e5e5e5;
-  --neutral-300: #d4d4d4;
-  --neutral-400: #a3a3a3;
-  --neutral-500: #737373;
-  --neutral-600: #525252;
-  --neutral-700: #404040;
-  --neutral-800: #262626;
-  --neutral-900: #171717;
+  /* --- Neutral: Cool Slate --- */
+  --color-neutral-50:  #F8FAFB;
+  --color-neutral-100: #F0F3F5;
+  --color-neutral-200: #E2E7EC;
+  --color-neutral-300: #CBD3DA;
+  --color-neutral-400: #9BA7B3;
+  --color-neutral-500: #6B7A88;
+  --color-neutral-600: #4E5D6B;
+  --color-neutral-700: #3B4856;
+  --color-neutral-800: #283340;
+  --color-neutral-900: #1A232E;
+  --color-neutral-950: #0F161E;
 
-  /* Surface colors for cards/inputs */
-  --surface: #ffffff;
-  --surface-secondary: #f5f5f5;
-  --muted: #737373;
+  /* --- Accent: Warm Amber --- */
+  --color-accent-50:  #FFFBEB;
+  --color-accent-100: #FEF3C7;
+  --color-accent-200: #FDE68A;
+  --color-accent-300: #FCD34D;
+  --color-accent-400: #FBBF24;
+  --color-accent-500: #F59E0B;
+  --color-accent-600: #D97706;
+  --color-accent-700: #B45309;
+  --color-accent-800: #92400E;
+  --color-accent-900: #78350F;
+  --color-accent-950: #451A03;
+
+  /* --- Semantic --- */
+  --color-success: #16A06F;
+  --color-warning: #F59E0B;
+  --color-error:   #EF4444;
+
+  /* --- Animations --- */
+  --animate-fade-in:    fadeIn 0.4s ease-out both;
+  --animate-slide-up:   slideUp 0.5s ease-out both;
+  --animate-pulse-soft: pulseSoft 2s ease-in-out infinite;
+
+  /* --- Font --- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
 }
 
-/* Dark mode - follows system preference */
+
+/* ============================================================
+   2. SEMANTIC TOKENS
+   ============================================================
+   Adaptive surface, text, and border colors that respond to
+   the user's color scheme preference.
+   ============================================================ */
+
+:root {
+  --background:         #FFFFFF;
+  --foreground:         #1A232E;
+  --surface:            #F8FAFB;
+  --surface-elevated:   #FFFFFF;
+  --border:             #E2E7EC;
+  --border-subtle:      #F0F3F5;
+  --ring:               #15A06F;
+  --muted:              #6B7A88;
+  --muted-foreground:   #4E5D6B;
+
+  color-scheme: light dark;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #171717;
-    --foreground: #f5f5f5;
-
-    /* Inverted neutral palette for dark mode */
-    --neutral-50: #262626;
-    --neutral-100: #303030;
-    --neutral-150: #383838;
-    --neutral-200: #404040;
-    --neutral-300: #525252;
-    --neutral-400: #737373;
-    --neutral-500: #a3a3a3;
-    --neutral-600: #d4d4d4;
-    --neutral-700: #e5e5e5;
-    --neutral-800: #f5f5f5;
-    --neutral-900: #fafafa;
-
-    /* Surface colors for dark mode */
-    --surface: #262626;
-    --surface-secondary: #303030;
-    --muted: #a3a3a3;
-
-    /* Shadows for dark mode */
-    --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.3), 0 4px 16px -4px rgba(0, 0, 0, 0.4);
-    --shadow-softer: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --background:         #0F161E;
+    --foreground:         #F0F3F5;
+    --surface:            #1A232E;
+    --surface-elevated:   #283340;
+    --border:             #3B4856;
+    --border-subtle:      #283340;
+    --ring:               #3DD68E;
+    --muted:              #9BA7B3;
+    --muted-foreground:   #CBD3DA;
   }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-surface-secondary: var(--surface-secondary);
-  --color-muted: var(--muted);
-  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
 
-  /* Sage colors */
-  --color-sage-50: var(--sage-50);
-  --color-sage-100: var(--sage-100);
-  --color-sage-200: var(--sage-200);
-  --color-sage-300: var(--sage-300);
-  --color-sage-400: var(--sage-400);
-  --color-sage-500: var(--sage-500);
-  --color-sage-600: var(--sage-600);
-  --color-sage-700: var(--sage-700);
-  --color-sage-800: var(--sage-800);
-  --color-sage-900: var(--sage-900);
+/* ============================================================
+   3. BASE STYLES
+   ============================================================ */
 
-  /* Neutral colors */
-  --color-neutral-50: var(--neutral-50);
-  --color-neutral-100: var(--neutral-100);
-  --color-neutral-150: var(--neutral-150);
-  --color-neutral-200: var(--neutral-200);
-  --color-neutral-300: var(--neutral-300);
-  --color-neutral-400: var(--neutral-400);
-  --color-neutral-500: var(--neutral-500);
-  --color-neutral-600: var(--neutral-600);
-  --color-neutral-700: var(--neutral-700);
-  --color-neutral-800: var(--neutral-800);
-  --color-neutral-900: var(--neutral-900);
-
-  /* Custom shadows */
-  --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 4px 16px -4px rgba(0, 0, 0, 0.08);
-  --shadow-softer: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
-
-  /* Animations */
-  --animate-fade-in: fadeIn 0.3s ease-out;
-  --animate-slide-up: slideUp 0.3s ease-out;
-  --animate-pulse-soft: pulseSoft 2s ease-in-out infinite;
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Selection highlight */
+::selection {
+  background-color: var(--color-primary-200);
+  color: var(--color-primary-900);
+}
+
+@media (prefers-color-scheme: dark) {
+  ::selection {
+    background-color: var(--color-primary-800);
+    color: var(--color-primary-100);
+  }
+}
+
+/* Focus ring — consistent across all interactive elements */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+
+/* ============================================================
+   4. TYPOGRAPHY
+   ============================================================
+   Inter is loaded via next/font with variable --font-inter.
+   We use tracking, weight, and size to create hierarchy.
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--foreground);
+}
+
+
+/* ============================================================
+   5. PROSE — react-markdown content
+   ============================================================ */
+
+.prose {
+  --tw-prose-body:         var(--foreground);
+  --tw-prose-headings:     var(--foreground);
+  --tw-prose-lead:         var(--muted);
+  --tw-prose-links:        var(--color-primary-600);
+  --tw-prose-bold:         var(--foreground);
+  --tw-prose-counters:     var(--muted);
+  --tw-prose-bullets:      var(--color-neutral-400);
+  --tw-prose-hr:           var(--border);
+  --tw-prose-quotes:       var(--foreground);
+  --tw-prose-quote-borders: var(--color-primary-500);
+  --tw-prose-captions:     var(--muted);
+  --tw-prose-code:         var(--foreground);
+  --tw-prose-pre-code:     var(--color-neutral-200);
+  --tw-prose-pre-bg:       var(--surface);
+  --tw-prose-th-borders:   var(--border);
+  --tw-prose-td-borders:   var(--border-subtle);
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose {
+    --tw-prose-links: var(--color-primary-400);
+  }
+}
+
+
+/* ============================================================
+   6. COMPONENT UTILITIES
+   ============================================================ */
+
+/* Card surface — elevated, bordered, softly rounded */
+.card {
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.03);
+  border-color: var(--color-neutral-300);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card:hover {
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.2),
+      0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--color-neutral-600);
+  }
+}
+
+/* Skeleton shimmer — loading placeholders */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 25%,
+    var(--border) 50%,
+    var(--surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+/* Timestamp badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  border-radius: 6px;
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-700);
+  border: 1px solid var(--color-primary-200);
+}
+
+@media (prefers-color-scheme: dark) {
+  .badge {
+    background-color: var(--color-primary-950);
+    color: var(--color-primary-300);
+    border-color: var(--color-primary-800);
+  }
+}
+
+
+/* ============================================================
+   7. ANIMATIONS
+   ============================================================ */
+
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @keyframes slideUp {
-  0% {
+  from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes pulseSoft {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
 }
 
-/* Respect user motion preferences */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -139,97 +293,33 @@
   }
 }
 
-html {
-  height: 100%;
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  min-height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* ============================================================
+   8. PWA — Standalone Mode
+   ============================================================ */
 
-/* Prose/Typography dark mode overrides */
-.prose {
-  --tw-prose-body: var(--foreground);
-  --tw-prose-headings: var(--foreground);
-  --tw-prose-links: var(--sage-500);
-  --tw-prose-bold: var(--foreground);
-  --tw-prose-counters: var(--muted);
-  --tw-prose-bullets: var(--muted);
-  --tw-prose-quotes: var(--foreground);
-  --tw-prose-code: var(--foreground);
-}
-
-/* Custom scrollbar for webkit browsers */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--neutral-300);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--neutral-400);
-}
-
-/* Focus visible styles */
-:focus-visible {
-  outline: 2px solid var(--sage-500);
-  outline-offset: 2px;
-}
-
-/* Utility classes */
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.3s ease-out;
-}
-
-.animate-pulse-soft {
-  animation: pulseSoft 2s ease-in-out infinite;
-}
-
-.shadow-soft {
-  box-shadow: var(--shadow-soft);
-}
-
-.shadow-softer {
-  box-shadow: var(--shadow-softer);
-}
-
-/* PWA Standalone Mode Adjustments */
-@media all and (display-mode: standalone) {
-  /* Add padding for iOS status bar in standalone mode */
-  header {
+/* Safe area padding for notched devices */
+@supports (padding-top: env(safe-area-inset-top)) {
+  body {
     padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
   }
+}
 
-  /* Disable iOS rubber-band bounce effect */
+/* Standalone PWA: prevent rubber-band bounce on iOS */
+@media (display-mode: standalone) {
   html, body {
-    overflow: hidden;
-    overscroll-behavior: none;
     position: fixed;
+    overflow: hidden;
     width: 100%;
     height: 100%;
   }
-}
 
-/* Safe area handling for notch devices */
-@supports (padding: env(safe-area-inset-bottom)) {
-  body {
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+  /* The main scroll container should handle scrolling instead */
+  main {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
