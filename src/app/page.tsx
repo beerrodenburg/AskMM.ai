@@ -58,7 +58,7 @@ export default function Home() {
 
   return (
     <PWAProvider>
-    <div className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
+    <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
       <Header />
 
       <main className="flex-1 flex flex-col">

@@ -3,6 +3,8 @@
   "short_name": "AskMM",
   "description": "AI-powered search for Medical Medium YouTube content",
   "start_url": "/",
+  "scope": "/",
+  "id": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#15A06F",
