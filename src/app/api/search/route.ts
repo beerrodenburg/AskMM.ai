@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const maxDuration = 30;
 
 export async function POST(request: NextRequest) {
-  const webhookUrl = process.env.N8N_WEBHOOK_URL_V2;
+  const webhookUrl = process.env.N8N_WEBHOOK_URL;
 
   if (!webhookUrl) {
     return NextResponse.json(
