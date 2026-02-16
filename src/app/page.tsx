@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { Header } from "@/components/Header";
 import { SearchBar } from "@/components/SearchBar";
 import { ResultCard } from "@/components/ResultCard";
@@ -63,6 +64,7 @@ export default function Home() {
   return (
     <PWAProvider>
     <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
+      <AnnouncementBanner />
       <Header onLogoClick={() => { setState("idle"); setQuery(""); setResults([]); setAnswerSummary(""); }} />
 
       <main className="flex-1 flex flex-col">
