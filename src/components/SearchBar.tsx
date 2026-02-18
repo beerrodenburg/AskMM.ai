@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent } from "react";
+import { type FormEvent, useRef, useEffect } from "react";
 import { Search, ArrowRight } from "lucide-react";
 
 interface SearchBarProps {
@@ -9,6 +9,7 @@ interface SearchBarProps {
   onSearch: (query: string) => void;
   placeholder?: string;
   disabled?: boolean;
+  autoFocus?: boolean;
 }
 
 export function SearchBar({
@@ -17,7 +18,20 @@ export function SearchBar({
   onSearch,
   placeholder = "Ask anything about Medical Medium\u2026",
   disabled = false,
+  autoFocus = false,
 }: SearchBarProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      // Skip auto-focus on touch devices to avoid opening the keyboard on load
+      const isTouch = window.matchMedia("(pointer: coarse)").matches;
+      if (!isTouch) {
+        inputRef.current.focus();
+      }
+    }
+  }, [autoFocus]);
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const trimmed = value.trim();
@@ -35,6 +49,7 @@ export function SearchBar({
           aria-hidden="true"
         />
         <input
+          ref={inputRef}
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}

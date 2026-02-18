@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
+    <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
       <Header />
 
       <main className="flex-1 overflow-y-auto">

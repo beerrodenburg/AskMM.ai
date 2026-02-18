@@ -22,7 +22,7 @@ export function AnnouncementBanner() {
 
   return (
     <div className="bg-primary-600 text-white text-sm text-center px-4 py-2 flex items-center justify-center gap-3">
-      <span>Search accuracy just got a major upgrade</span>
+      <span>Update: AskMM.ai is now much more accurate.</span>
       <button
         onClick={dismiss}
         aria-label="Dismiss"

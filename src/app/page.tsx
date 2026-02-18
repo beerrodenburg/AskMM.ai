@@ -80,9 +80,9 @@ export default function Home() {
                 Search every Medical Medium video, instantly
               </h1>
               <p className="text-base text-[var(--muted)] max-w-md mx-auto">
-                Ask a health question and get answers pulled directly from
+                Ask a question and get answers pulled directly from
                 Anthony William&apos;s YouTube videos &mdash; with timestamps
-                so you can hear it yourself.
+                so you can hear his actual words.
               </p>
             </div>
           )}
@@ -92,6 +92,7 @@ export default function Home() {
             onChange={setQuery}
             onSearch={search}
             disabled={state === "loading"}
+            autoFocus={state === "idle"}
           />
 
           {/* Suggested queries */}
