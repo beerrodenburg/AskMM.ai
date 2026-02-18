@@ -29,8 +29,8 @@ export function ResultCard({ result }: ResultCardProps) {
           {result.videoTitle}
         </h3>
 
-        <p className="text-sm text-[var(--muted-foreground)] leading-relaxed line-clamp-3">
-          {result.summary}
+        <p className="text-sm text-[var(--muted-foreground)] leading-relaxed line-clamp-3 italic">
+          &ldquo;{result.summary}&rdquo;
         </p>
 
         <a
