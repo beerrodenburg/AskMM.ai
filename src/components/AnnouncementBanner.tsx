@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 
+const SHOW_BANNER = false;
 const BANNER_KEY = "askmm-banner-dismissed-v3-accuracy";
 
 export function AnnouncementBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.getItem(BANNER_KEY)) {
+    if (SHOW_BANNER && !localStorage.getItem(BANNER_KEY)) {
       setVisible(true);
     }
   }, []);
