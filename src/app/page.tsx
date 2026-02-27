@@ -5,7 +5,6 @@ import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { Header } from "@/components/Header";
 import { SearchBar } from "@/components/SearchBar";
 import { ResultCard } from "@/components/ResultCard";
-import { SummaryBanner } from "@/components/SummaryBanner";
 import { SearchSkeleton } from "@/components/SearchSkeleton";
 import { EmptyState } from "@/components/EmptyState";
 import { ErrorState } from "@/components/ErrorState";
@@ -27,13 +26,11 @@ export default function Home() {
   const [state, setState] = useState<SearchState>("idle");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [query, setQuery] = useState("");
-  const [answerSummary, setAnswerSummary] = useState("");
 
   const search = useCallback(async (q: string) => {
     setQuery(q);
     setState("loading");
     setResults([]);
-    setAnswerSummary("");
 
     try {
       const res = await fetch("/api/search", {
@@ -51,7 +48,6 @@ export default function Home() {
         setState("empty");
       } else {
         setResults(items);
-        setAnswerSummary(data.answerSummary ?? "");
         setState("results");
       }
     } catch {
@@ -65,7 +61,7 @@ export default function Home() {
     <PWAProvider>
     <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
       <AnnouncementBanner />
-      <Header onLogoClick={() => { setState("idle"); setQuery(""); setResults([]); setAnswerSummary(""); }} />
+      <Header onLogoClick={() => { setState("idle"); setQuery(""); setResults([]); }} />
 
       <main className="flex-1 flex flex-col">
         {/* Hero / search area */}
@@ -118,8 +114,7 @@ export default function Home() {
 
             {state === "results" && (
               <>
-                {answerSummary && <SummaryBanner summary={answerSummary} />}
-                <p className="text-sm text-[var(--muted)] mb-4">
+<p className="text-sm text-[var(--muted)] mb-4">
                   {results.length} result{results.length !== 1 ? "s" : ""} found
                 </p>
                 <div className="flex flex-col gap-3">
