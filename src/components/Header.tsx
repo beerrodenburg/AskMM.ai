@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { SearchUsageBadge } from "./SearchUsageBadge";
 
 interface HeaderProps {
   onLogoClick?: () => void;
+  searchesRemaining?: number | null;
+  searchesLimit?: number;
 }
 
-export function Header({ onLogoClick }: HeaderProps) {
+export function Header({ onLogoClick, searchesRemaining, searchesLimit = 5 }: HeaderProps) {
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)]">
       <Link
@@ -17,12 +20,21 @@ export function Header({ onLogoClick }: HeaderProps) {
         </span>
       </Link>
 
-      <nav className="flex items-center gap-6">
+      <nav className="flex items-center gap-4">
+        {searchesRemaining != null && (
+          <SearchUsageBadge remaining={searchesRemaining} limit={searchesLimit} />
+        )}
         <Link
           href="/about"
           className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
         >
           About
+        </Link>
+        <Link
+          href="/account"
+          className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+        >
+          Account
         </Link>
       </nav>
     </header>

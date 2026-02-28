@@ -9,6 +9,8 @@ import { SearchSkeleton } from "@/components/SearchSkeleton";
 import { EmptyState } from "@/components/EmptyState";
 import { ErrorState } from "@/components/ErrorState";
 import { PWAProvider } from "@/components/PWAProvider";
+import { PaywallModal } from "@/components/PaywallModal";
+import { useDeviceId } from "@/hooks/useDeviceId";
 import type { SearchResult } from "@/lib/types";
 
 const SUGGESTED_QUERIES = [
@@ -20,14 +22,21 @@ const SUGGESTED_QUERIES = [
   "How long does it take to heal eczema?",
 ];
 
+const SEARCH_LIMIT = 5;
+
 type SearchState = "idle" | "loading" | "results" | "empty" | "error";
 
 export default function Home() {
   const [state, setState] = useState<SearchState>("idle");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [query, setQuery] = useState("");
+  const [showPaywall, setShowPaywall] = useState(false);
+  const [searchesRemaining, setSearchesRemaining] = useState<number | null>(null);
+  const deviceId = useDeviceId();
 
   const search = useCallback(async (q: string) => {
+    if (!deviceId) return;
+
     setQuery(q);
     setState("loading");
     setResults([]);
@@ -35,13 +44,28 @@ export default function Home() {
     try {
       const res = await fetch("/api/search", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Device-ID": deviceId,
+        },
         body: JSON.stringify({ message: q }),
       });
+
+      if (res.status === 429) {
+        setState("idle");
+        setShowPaywall(true);
+        setSearchesRemaining(0);
+        return;
+      }
 
       if (!res.ok) throw new Error("Search failed");
 
       const data = await res.json();
+
+      if (data._usage?.remaining != null) {
+        setSearchesRemaining(data._usage.remaining);
+      }
+
       const items: SearchResult[] = data.results ?? [];
 
       if (items.length === 0) {
@@ -53,7 +77,7 @@ export default function Home() {
     } catch {
       setState("error");
     }
-  }, []);
+  }, [deviceId]);
 
   const isCompact = state !== "idle";
 
@@ -61,7 +85,11 @@ export default function Home() {
     <PWAProvider>
     <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
       <AnnouncementBanner />
-      <Header onLogoClick={() => { setState("idle"); setQuery(""); setResults([]); }} />
+      <Header
+        onLogoClick={() => { setState("idle"); setQuery(""); setResults([]); }}
+        searchesRemaining={searchesRemaining}
+        searchesLimit={SEARCH_LIMIT}
+      />
 
       <main className="flex-1 flex flex-col">
         {/* Hero / search area */}
@@ -137,6 +165,8 @@ export default function Home() {
           </div>
         </section>
       </main>
+
+      {showPaywall && <PaywallModal onClose={() => setShowPaywall(false)} />}
     </div>
     </PWAProvider>
   );
