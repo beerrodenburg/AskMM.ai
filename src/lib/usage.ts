@@ -36,15 +36,18 @@ export async function checkAndIncrementUsage(
     }
 
     // Authenticated but no active subscription — apply daily limit per user
-    const { data: usage, error } = await supabase
-      .from('anonymous_usage')
-      .select('count, reset_date')
-      .eq('device_id', `user:${userId}`)
-      .single()
+    // Check both user-keyed and device-keyed usage to prevent resetting the
+    // counter by signing up after exhausting free searches as anonymous.
+    const [{ data: userUsage, error: userError }, { data: deviceUsage }] = await Promise.all([
+      supabase.from('anonymous_usage').select('count, reset_date').eq('device_id', `user:${userId}`).single(),
+      supabase.from('anonymous_usage').select('count, reset_date').eq('device_id', deviceId).single(),
+    ])
 
-    if (error && error.code !== 'PGRST116') throw error // PGRST116 = not found
+    if (userError && userError.code !== 'PGRST116') throw userError
 
-    const count = !usage || usage.reset_date !== today ? 0 : usage.count
+    const userCount = !userUsage || userUsage.reset_date !== today ? 0 : userUsage.count
+    const deviceCount = !deviceUsage || deviceUsage.reset_date !== today ? 0 : deviceUsage.count
+    const count = Math.max(userCount, deviceCount)
 
     if (count >= DAILY_LIMIT) {
       return { allowed: false, searchesUsed: count, searchesLimit: DAILY_LIMIT }
