@@ -11,6 +11,8 @@ export async function GET(request: NextRequest) {
   }
 
   const checkoutUrl = process.env.NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_URL!
-  const url = `${checkoutUrl}?checkout[email]=${encodeURIComponent(user.email!)}`
-  return NextResponse.redirect(url)
+  const redirectUrl = new URL(checkoutUrl)
+  redirectUrl.searchParams.set('checkout[email]', user.email!)
+  redirectUrl.searchParams.set('checkout[custom][user_id]', user.id)
+  return NextResponse.redirect(redirectUrl.toString())
 }

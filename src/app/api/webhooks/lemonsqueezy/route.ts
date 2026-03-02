@@ -41,9 +41,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true })
   }
 
-  // Look up user by email (may not exist if buyer skipped account creation)
-  let userId: string | null = null
-  if (userEmail) {
+  // Prefer user_id passed as custom checkout metadata (reliable, immune to email changes).
+  // Fall back to email lookup for legacy flows or manual subscriptions.
+  let userId: string | null = payload.meta?.custom_data?.user_id ?? null
+  if (!userId && userEmail) {
     const { data: { users } } = await supabase.auth.admin.listUsers()
     const match = users.find(u => u.email === userEmail)
     if (match) userId = match.id
