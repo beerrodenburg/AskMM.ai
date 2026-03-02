@@ -13,18 +13,27 @@ function ResetPasswordForm() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Supabase redirects here with ?code=xxx after the user clicks the email link.
-    // Exchange the code for a session, then show the form.
-    const code = new URLSearchParams(window.location.search).get("code");
-    if (!code) {
-      setReady(true);
-      return;
-    }
-    createClient().auth.exchangeCodeForSession(code).then(({ error }) => {
+    const supabase = createClient();
+
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (session) {
+        // Session already set (by /auth/callback or auto-detected by Supabase client)
+        window.history.replaceState({}, "", "/auth/reset-password");
+        setReady(true);
+        return;
+      }
+
+      // Fallback: code may have landed here directly (e.g. home-page safety net)
+      const code = new URLSearchParams(window.location.search).get("code");
+      if (!code) {
+        router.replace("/auth/forgot-password");
+        return;
+      }
+
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
       if (error) {
         router.replace("/auth/forgot-password?error=link_expired");
       } else {
-        // Clean the code out of the URL without triggering a re-render
         window.history.replaceState({}, "", "/auth/reset-password");
         setReady(true);
       }
