@@ -2,11 +2,12 @@
 
 import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Header } from "@/components/Header";
 
 function SignUpForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get("next") ?? "/";
 
@@ -21,7 +22,7 @@ function SignUpForm() {
     setError(null);
     setLoading(true);
     const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -31,6 +32,11 @@ function SignUpForm() {
     if (error) {
       setError(error.message);
       setLoading(false);
+    } else if (data.session) {
+      // Email confirmation is disabled — user is immediately signed in
+      await fetch('/api/link-subscription', { method: 'POST' });
+      router.push(next);
+      router.refresh();
     } else {
       setSuccess(true);
     }
