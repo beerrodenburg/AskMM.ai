@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Header } from "@/components/Header";
 
-export default function SignInPage() {
+function SignInForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") ?? "/";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +26,9 @@ export default function SignInPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      router.push("/");
+      // Link any pending subscription for this email
+      await fetch('/api/link-subscription', { method: 'POST' });
+      router.push(next);
       router.refresh();
     }
   }
@@ -34,11 +39,13 @@ export default function SignInPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
       },
     });
     if (error) setError(error.message);
   }
+
+  const signUpHref = next !== "/" ? `/auth/signup?next=${encodeURIComponent(next)}` : "/auth/signup";
 
   return (
     <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
@@ -48,7 +55,7 @@ export default function SignInPage() {
           <h1 className="text-2xl font-semibold text-[var(--foreground)] mb-1">Sign in</h1>
           <p className="text-sm text-[var(--muted)] mb-8">
             Don&apos;t have an account?{" "}
-            <Link href="/auth/signup" className="text-primary-500 hover:underline">
+            <Link href={signUpHref} className="text-primary-500 hover:underline">
               Sign up
             </Link>
           </p>
@@ -113,5 +120,13 @@ export default function SignInPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense>
+      <SignInForm />
+    </Suspense>
   );
 }

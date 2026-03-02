@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Header } from "@/components/Header";
 
-export default function SignUpPage() {
+function SignUpForm() {
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") ?? "/";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +25,7 @@ export default function SignUpPage() {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
       },
     });
     if (error) {
@@ -38,11 +42,13 @@ export default function SignUpPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
       },
     });
     if (error) setError(error.message);
   }
+
+  const signInHref = next !== "/" ? `/auth/signin?next=${encodeURIComponent(next)}` : "/auth/signin";
 
   if (success) {
     return (
@@ -74,7 +80,7 @@ export default function SignUpPage() {
           <h1 className="text-2xl font-semibold text-[var(--foreground)] mb-1">Create an account</h1>
           <p className="text-sm text-[var(--muted)] mb-8">
             Already have one?{" "}
-            <Link href="/auth/signin" className="text-primary-500 hover:underline">
+            <Link href={signInHref} className="text-primary-500 hover:underline">
               Sign in
             </Link>
           </p>
@@ -139,5 +145,13 @@ export default function SignUpPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense>
+      <SignUpForm />
+    </Suspense>
   );
 }

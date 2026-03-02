@@ -6,8 +6,6 @@ interface PaywallModalProps {
   onClose: () => void;
 }
 
-const CHECKOUT_URL = process.env.NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_URL ?? "#";
-
 export function PaywallModal({ onClose }: PaywallModalProps) {
   return (
     <div
@@ -49,9 +47,7 @@ export function PaywallModal({ onClose }: PaywallModalProps) {
 
         <div className="flex flex-col gap-3">
           <a
-            href={CHECKOUT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/checkout"
             className="w-full py-3 px-4 bg-primary-500 hover:bg-primary-600 text-white font-medium text-sm rounded-xl text-center transition-colors"
           >
             Support AskMM — $5/month
