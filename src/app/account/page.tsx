@@ -41,7 +41,7 @@ export default async function AccountPage() {
 
   return (
     <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
-      <Header />
+      <Header userEmail={user.email} />
       <main className="flex-1 px-6 py-12">
         <div className="max-w-sm mx-auto">
           <h1 className="text-2xl font-semibold text-[var(--foreground)] mb-8">Account</h1>

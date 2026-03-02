@@ -12,6 +12,7 @@ import { ErrorState } from "@/components/ErrorState";
 import { PWAProvider } from "@/components/PWAProvider";
 import { PaywallModal } from "@/components/PaywallModal";
 import { useDeviceId } from "@/hooks/useDeviceId";
+import { useUser } from "@/hooks/useUser";
 import type { SearchResult } from "@/lib/types";
 
 const SUGGESTED_QUERIES = [
@@ -34,6 +35,7 @@ export default function Home() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [searchesRemaining, setSearchesRemaining] = useState<number | null>(null);
   const deviceId = useDeviceId();
+  const userEmail = useUser();
   const router = useRouter();
 
   // Safety net: Supabase may redirect auth errors to the site URL (/) if the
@@ -110,6 +112,7 @@ export default function Home() {
         onLogoClick={() => { setState("idle"); setQuery(""); setResults([]); }}
         searchesRemaining={searchesRemaining}
         searchesLimit={SEARCH_LIMIT}
+        userEmail={userEmail}
       />
 
       <main className="flex-1 flex flex-col">
