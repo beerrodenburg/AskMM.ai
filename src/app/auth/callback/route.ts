@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@supabase/supabase-js";
+import { createClient as createSSRClient } from "@/lib/supabase/server";
+
+const serviceClient = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -7,9 +13,18 @@ export async function GET(request: NextRequest) {
   const next = searchParams.get("next") ?? "/";
 
   if (code) {
-    const supabase = await createClient();
+    const supabase = await createSSRClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      // Link any pending subscription that was created before the user had an account
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user?.email) {
+        await serviceClient
+          .from('subscriptions')
+          .update({ user_id: user.id })
+          .eq('user_email', user.email)
+          .is('user_id', null)
+      }
       return NextResponse.redirect(`${origin}${next}`);
     }
   }

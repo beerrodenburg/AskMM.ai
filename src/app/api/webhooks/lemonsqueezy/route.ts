@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true })
   }
 
-  // Look up user by email
+  // Look up user by email (may not exist if buyer skipped account creation)
   let userId: string | null = null
   if (userEmail) {
     const { data: { users } } = await supabase.auth.admin.listUsers()
@@ -49,25 +49,21 @@ export async function POST(req: NextRequest) {
     if (match) userId = match.id
   }
 
-  if (!userId) {
-    // Store subscription with no user link — will be linked when user signs in
-    // For now just log and return OK so LemonSqueezy doesn't retry
-    console.warn(`LemonSqueezy webhook: no user found for email ${userEmail}`)
-    return NextResponse.json({ received: true })
-  }
-
+  // Always write the subscription row — user_id may be null for frictionless-checkout buyers.
+  // The auth callback will link user_id when the buyer creates an account.
   const { error } = await supabase
     .from('subscriptions')
     .upsert(
       {
         user_id: userId,
+        user_email: userEmail ?? null,
         ls_customer_id: lsCustomerId,
         ls_subscription_id: lsSubscriptionId,
         status,
         current_period_end: currentPeriodEnd,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'user_id' }
+      { onConflict: 'ls_subscription_id' }
     )
 
   if (error) {
