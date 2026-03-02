@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { Header } from "@/components/Header";
 import { SearchBar } from "@/components/SearchBar";
@@ -33,6 +34,22 @@ export default function Home() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [searchesRemaining, setSearchesRemaining] = useState<number | null>(null);
   const deviceId = useDeviceId();
+  const router = useRouter();
+
+  // Safety net: Supabase may redirect auth errors to the site URL (/) if the
+  // callback URL isn't in the allowed redirect list. Catch them here and forward
+  // to the appropriate auth page so the user sees a meaningful message.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get("error");
+    const errorCode = params.get("error_code");
+    if (!error) return;
+    if (errorCode === "otp_expired") {
+      router.replace("/auth/forgot-password?error=link_expired");
+    } else if (error === "access_denied") {
+      router.replace("/auth/signin?error=auth_failed");
+    }
+  }, [router]);
 
   const search = useCallback(async (q: string) => {
     if (!deviceId) return;

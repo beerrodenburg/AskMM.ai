@@ -10,12 +10,22 @@ const serviceClient = createClient(
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
+  const error = searchParams.get("error");
+  const errorCode = searchParams.get("error_code");
   const next = searchParams.get("next") ?? "/";
+
+  // Handle error redirects from Supabase (e.g., expired or invalid OTP links)
+  if (error) {
+    if (errorCode === "otp_expired") {
+      return NextResponse.redirect(`${origin}/auth/forgot-password?error=link_expired`);
+    }
+    return NextResponse.redirect(`${origin}/auth/signin?error=auth_failed`);
+  }
 
   if (code) {
     const supabase = await createSSRClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+    if (!exchangeError) {
       // Link any pending subscription that was created before the user had an account
       const { data: { user } } = await supabase.auth.getUser()
       if (user?.email) {

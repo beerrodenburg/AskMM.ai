@@ -2,6 +2,7 @@
 
 import { Suspense, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Header } from "@/components/Header";
 
@@ -10,6 +11,8 @@ function ForgotPasswordForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const linkExpired = searchParams.get("error") === "link_expired";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -60,6 +63,12 @@ function ForgotPasswordForm() {
               Sign in
             </Link>
           </p>
+
+          {linkExpired && (
+            <p className="text-sm text-amber-400 bg-amber-400/10 border border-amber-400/20 rounded-xl px-4 py-3 mb-4">
+              Your reset link has expired. Enter your email to receive a new one.
+            </p>
+          )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
