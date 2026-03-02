@@ -7,7 +7,7 @@ interface HeaderProps {
   searchesLimit?: number;
 }
 
-export function Header({ onLogoClick, searchesRemaining, searchesLimit = 5 }: HeaderProps) {
+export function Header({ onLogoClick, searchesRemaining, searchesLimit = 3 }: HeaderProps) {
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-[var(--border-subtle)]">
       <Link

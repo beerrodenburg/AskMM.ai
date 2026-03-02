@@ -41,7 +41,7 @@ export function PaywallModal({ onClose }: PaywallModalProps) {
         </div>
 
         <h2 className="text-lg font-semibold text-[var(--foreground)] mb-2">
-          You've used your 5 free searches today
+          You've used your 3 free searches today
         </h2>
         <p className="text-sm text-[var(--muted)] mb-6 leading-relaxed">
           Support AskMM to keep this tool free for everyone — and get unlimited searches for yourself.
@@ -54,7 +54,7 @@ export function PaywallModal({ onClose }: PaywallModalProps) {
             rel="noopener noreferrer"
             className="w-full py-3 px-4 bg-primary-500 hover:bg-primary-600 text-white font-medium text-sm rounded-xl text-center transition-colors"
           >
-            Support AskMM — $4.99/month
+            Support AskMM — $5/month
           </a>
           <Link
             href="/auth/signin"

@@ -22,7 +22,7 @@ const SUGGESTED_QUERIES = [
   "How long does it take to heal eczema?",
 ];
 
-const SEARCH_LIMIT = 5;
+const SEARCH_LIMIT = 3;
 
 type SearchState = "idle" | "loading" | "results" | "empty" | "error";
 

@@ -84,7 +84,7 @@ export default async function AccountPage() {
             ) : (
               <>
                 <p className="text-xs text-[var(--muted)] mb-4">
-                  5 free searches per day.
+                  3 free searches per day.
                 </p>
                 <a
                   href={CHECKOUT_URL}
@@ -92,7 +92,7 @@ export default async function AccountPage() {
                   rel="noopener noreferrer"
                   className="block w-full py-2.5 px-4 text-center text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 rounded-xl transition-colors"
                 >
-                  Support AskMM — $4.99/month
+                  Support AskMM — $5/month
                 </a>
               </>
             )}

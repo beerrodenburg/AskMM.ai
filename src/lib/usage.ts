@@ -1,6 +1,6 @@
 import { createServiceClient } from './supabase/server'
 
-const DAILY_LIMIT = 5
+const DAILY_LIMIT = 3
 
 export type UsageResult =
   | { allowed: true; remaining: number }
