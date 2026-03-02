@@ -41,10 +41,14 @@ export default function Home() {
   // to the appropriate auth page so the user sees a meaningful message.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
     const error = params.get("error");
     const errorCode = params.get("error_code");
-    if (!error) return;
-    if (errorCode === "otp_expired") {
+    // Supabase redirects to the Site URL (/) when the redirectTo isn't in the
+    // allowlist. Forward auth params to the correct pages.
+    if (code) {
+      router.replace(`/auth/reset-password?code=${code}`);
+    } else if (errorCode === "otp_expired") {
       router.replace("/auth/forgot-password?error=link_expired");
     } else if (error === "access_denied") {
       router.replace("/auth/signin?error=auth_failed");
