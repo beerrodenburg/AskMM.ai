@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const origin = new URL(request.url).origin
 
   if (!user) {
-    return NextResponse.redirect(`${origin}/auth/signin?next=/checkout`)
+    return NextResponse.redirect(`${origin}/auth/signup?next=/checkout`)
   }
 
   const checkoutUrl = process.env.NEXT_PUBLIC_LEMONSQUEEZY_CHECKOUT_URL!
