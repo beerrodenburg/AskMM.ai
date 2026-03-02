@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Header } from "@/components/Header";
@@ -10,6 +10,26 @@ function ResetPasswordForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    // Supabase redirects here with ?code=xxx after the user clicks the email link.
+    // Exchange the code for a session, then show the form.
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (!code) {
+      setReady(true);
+      return;
+    }
+    createClient().auth.exchangeCodeForSession(code).then(({ error }) => {
+      if (error) {
+        router.replace("/auth/forgot-password?error=link_expired");
+      } else {
+        // Clean the code out of the URL without triggering a re-render
+        window.history.replaceState({}, "", "/auth/reset-password");
+        setReady(true);
+      }
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,6 +44,17 @@ function ResetPasswordForm() {
       router.push("/");
       router.refresh();
     }
+  }
+
+  if (!ready) {
+    return (
+      <div id="app-shell" className="flex flex-col min-h-[100dvh] bg-[var(--background)]">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <p className="text-sm text-[var(--muted)]">Verifying your link…</p>
+        </main>
+      </div>
+    );
   }
 
   return (
