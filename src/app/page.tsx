@@ -109,21 +109,6 @@ export default function Home() {
               ))}
             </div>
           )}
-
-          {/* Donation note */}
-          {!isCompact && (
-            <p className="mt-5 text-xs text-[var(--muted)] animate-[fadeIn_0.8s_ease-out]">
-              Free to use &middot; Powered by community donations &middot;{" "}
-              <Link
-                href="https://ko-fi.com/beer"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-500 hover:underline"
-              >
-                Support on Ko-fi ♥
-              </Link>
-            </p>
-          )}
         </section>
 
         {/* Content area */}
