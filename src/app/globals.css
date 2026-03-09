@@ -1,6 +1,6 @@
 /* ============================================================
-   AskMM.ai v2 — Brand System
-   Modern & Minimal · Content-Forward · Health/Wellness Search
+   AskMM.ai — Brand System
+   Medical Medium Brand Colors · Neutral Surfaces · Bold Accents
    ============================================================ */
 
 @import "tailwindcss";
@@ -9,54 +9,54 @@
 /* ============================================================
    1. COLOR PALETTE
    ============================================================
-   Primary: Teal-Emerald — authoritative, natural, trustworthy
-   Neutral: Cool slate — modern, clean, recedes behind content
-   Accent:  Warm amber — sparingly used for highlights & badges
+   Primary: Medical Medium Navy #28419e — exact brand blue
+   Neutral: Warm Stone — earthy, grounded, no blue tint
+   Accent:  Orange — matches MM's CTA energy
    ============================================================ */
 
 @theme inline {
-  /* --- Primary: Electric Cyan --- */
-  --color-primary-50:  #E0FAFE;
-  --color-primary-100: #CAFFFD;
-  --color-primary-200: #9AF4FC;
-  --color-primary-300: #5EEAF8;
-  --color-primary-400: #2DD8F0;
-  --color-primary-500: #06C8D4;
-  --color-primary-600: #059AAE;
-  --color-primary-700: #047A8C;
-  --color-primary-800: #035E6D;
-  --color-primary-900: #024A56;
-  --color-primary-950: #012C35;
+  /* --- Primary: Medical Medium Navy --- */
+  --color-primary-50:  #EEF1F9;
+  --color-primary-100: #D5DCF2;
+  --color-primary-200: #ABBAE5;
+  --color-primary-300: #8197D8;
+  --color-primary-400: #5774C8;
+  --color-primary-500: #28419e;
+  --color-primary-600: #1E3182;
+  --color-primary-700: #162466;
+  --color-primary-800: #0E184A;
+  --color-primary-900: #080D2E;
+  --color-primary-950: #040716;
 
-  /* --- Neutral: Deep Navy --- */
-  --color-neutral-50:  #F0F8FA;
-  --color-neutral-100: #E0EEF4;
-  --color-neutral-200: #C0D8E8;
-  --color-neutral-300: #90B8CC;
-  --color-neutral-400: #6090B0;
-  --color-neutral-500: #407898;
-  --color-neutral-600: #305878;
-  --color-neutral-700: #204060;
-  --color-neutral-800: #162035;
-  --color-neutral-900: #0E1620;
-  --color-neutral-950: #080D14;
+  /* --- Neutral: Warm Stone (no blue tint) --- */
+  --color-neutral-50:  #FAFAF9;
+  --color-neutral-100: #F5F5F4;
+  --color-neutral-200: #E7E5E4;
+  --color-neutral-300: #D6D3D1;
+  --color-neutral-400: #A8A29E;
+  --color-neutral-500: #78716C;
+  --color-neutral-600: #57534E;
+  --color-neutral-700: #44403C;
+  --color-neutral-800: #292524;
+  --color-neutral-900: #1C1917;
+  --color-neutral-950: #0C0A09;
 
-  /* --- Accent: Gold --- */
-  --color-accent-50:  #FFFDE7;
-  --color-accent-100: #FFF9C4;
-  --color-accent-200: #FFF176;
-  --color-accent-300: #FFE83A;
-  --color-accent-400: #F5D800;
-  --color-accent-500: #F0C040;
-  --color-accent-600: #D4A820;
-  --color-accent-700: #B88C10;
-  --color-accent-800: #9C7408;
-  --color-accent-900: #805C04;
-  --color-accent-950: #4A3400;
+  /* --- Accent: Orange --- */
+  --color-accent-50:  #FFF7ED;
+  --color-accent-100: #FFEDD5;
+  --color-accent-200: #FED7AA;
+  --color-accent-300: #FDBA74;
+  --color-accent-400: #FB923C;
+  --color-accent-500: #F97316;
+  --color-accent-600: #EA580C;
+  --color-accent-700: #C2410C;
+  --color-accent-800: #9A3412;
+  --color-accent-900: #7C2D12;
+  --color-accent-950: #431407;
 
   /* --- Semantic --- */
-  --color-success: #06C8D4;
-  --color-warning: #F0C040;
+  --color-success: #22C55E;
+  --color-warning: #F97316;
   --color-error:   #EF4444;
 
   /* --- Animations --- */
@@ -73,35 +73,35 @@
 /* ============================================================
    2. SEMANTIC TOKENS
    ============================================================
-   Adaptive surface, text, and border colors that respond to
-   the user's color scheme preference.
+   Neutral warm-charcoal dark mode. Clean white light mode.
+   MM blue appears only as accent/interactive — never background.
    ============================================================ */
 
 :root {
-  --background:         #080D14;
-  --foreground:         #D8EEF4;
-  --surface:            #0E1620;
-  --surface-elevated:   #162035;
-  --border:             #1E3048;
-  --border-subtle:      #162035;
-  --ring:               #06C8D4;
-  --muted:              #5A8098;
-  --muted-foreground:   #8AB8C8;
+  --background:         #111110;
+  --foreground:         #F5F5F4;
+  --surface:            #181717;
+  --surface-elevated:   #211F1E;
+  --border:             #2E2B28;
+  --border-subtle:      #211F1E;
+  --ring:               #7A96E0;
+  --muted:              #78716C;
+  --muted-foreground:   #A8A29E;
 
   color-scheme: dark light;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --background:         #F4FAFB;
-    --foreground:         #082030;
-    --surface:            #E8F4F8;
+    --background:         #FFFFFF;
+    --foreground:         #1C1917;
+    --surface:            #F5F5F4;
     --surface-elevated:   #FFFFFF;
-    --border:             #C0D8E8;
-    --border-subtle:      #D8EEF4;
-    --ring:               #059AAE;
-    --muted:              #407898;
-    --muted-foreground:   #305878;
+    --border:             #D6D3D1;
+    --border-subtle:      #E7E5E4;
+    --ring:               #28419e;
+    --muted:              #78716C;
+    --muted-foreground:   #57534E;
   }
 }
 
@@ -132,7 +132,7 @@ body {
 
 @media (prefers-color-scheme: light) {
   ::selection {
-    background-color: var(--color-primary-200);
+    background-color: var(--color-primary-100);
     color: var(--color-primary-900);
   }
 }
@@ -140,13 +140,13 @@ body {
 /* Focus ring — consistent across all interactive elements */
 :focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(6, 200, 212, 0.28);
+  box-shadow: 0 0 0 3px rgba(122, 150, 224, 0.35);
   border-radius: 6px;
 }
 
 @media (prefers-color-scheme: light) {
   :focus-visible {
-    box-shadow: 0 0 0 3px rgba(5, 154, 174, 0.22);
+    box-shadow: 0 0 0 3px rgba(40, 65, 158, 0.22);
   }
 }
 
@@ -174,10 +174,10 @@ h1, h2, h3, h4, h5, h6 {
   --tw-prose-body:         var(--foreground);
   --tw-prose-headings:     var(--foreground);
   --tw-prose-lead:         var(--muted);
-  --tw-prose-links:        var(--color-primary-600);
+  --tw-prose-links:        var(--color-primary-400);
   --tw-prose-bold:         var(--foreground);
   --tw-prose-counters:     var(--muted);
-  --tw-prose-bullets:      var(--color-neutral-400);
+  --tw-prose-bullets:      var(--color-neutral-500);
   --tw-prose-hr:           var(--border);
   --tw-prose-quotes:       var(--foreground);
   --tw-prose-quote-borders: var(--color-primary-500);
@@ -191,7 +191,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (prefers-color-scheme: light) {
   .prose {
-    --tw-prose-links: var(--color-primary-600);
+    --tw-prose-links: var(--color-primary-500);
   }
 }
 
@@ -210,16 +210,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .card:hover {
   box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.2),
-    0 4px 12px rgba(0, 0, 0, 0.15);
+    0 1px 3px rgba(0, 0, 0, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.2);
   border-color: var(--color-neutral-700);
 }
 
 @media (prefers-color-scheme: light) {
   .card:hover {
     box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.04),
-      0 4px 12px rgba(0, 0, 0, 0.03);
+      0 1px 3px rgba(0, 0, 0, 0.05),
+      0 4px 12px rgba(0, 0, 0, 0.04);
     border-color: var(--color-neutral-300);
   }
 }
@@ -246,22 +246,24 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.875rem;
   font-weight: 500;
   border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--color-primary-500) 40%, transparent);
-  color: var(--color-primary-400);
+  border: 1px solid color-mix(in srgb, var(--color-primary-400) 40%, transparent);
+  color: var(--color-primary-300);
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .btn-donate:hover {
   background-color: var(--color-primary-950);
-  border-color: color-mix(in srgb, var(--color-primary-500) 65%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary-400) 65%, transparent);
 }
 
 @media (prefers-color-scheme: light) {
   .btn-donate {
-    color: var(--color-primary-600);
+    color: var(--color-primary-500);
+    border-color: color-mix(in srgb, var(--color-primary-500) 35%, transparent);
   }
   .btn-donate:hover {
     background-color: var(--color-primary-50);
+    border-color: color-mix(in srgb, var(--color-primary-500) 55%, transparent);
   }
 }
 
@@ -277,13 +279,13 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 6px;
   background-color: var(--color-primary-950);
   color: var(--color-primary-300);
-  border: 1px solid var(--color-primary-800);
+  border: 1px solid var(--color-primary-900);
 }
 
 @media (prefers-color-scheme: light) {
   .badge {
     background-color: var(--color-primary-50);
-    color: var(--color-primary-700);
+    color: var(--color-primary-600);
     border-color: var(--color-primary-200);
   }
 }
