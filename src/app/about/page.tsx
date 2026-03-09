@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Heart } from "lucide-react";
 import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
@@ -141,6 +142,21 @@ export default function AboutPage() {
 
             <hr />
 
+            <h2>Support AskMM</h2>
+            <p>
+              AskMM.ai is completely free &mdash; no ads, no subscriptions, no tracking.
+            </p>
+            <p>
+              Running it costs real money: AI APIs, vector database hosting, and server
+              infrastructure. It&apos;s kept alive entirely by the MM community.
+            </p>
+            <p>
+              If this tool has helped you on your healing journey, a small donation makes
+              a big difference and keeps it running for everyone.
+            </p>
+
+            <hr />
+
             <h2>Get in Touch</h2>
             <p>
               I&apos;d love to hear from you! Whether you have suggestions, found
@@ -169,7 +185,19 @@ export default function AboutPage() {
             <p>&mdash; Beer</p>
           </div>
 
-          <div className="mt-10 mb-12 text-center">
+          <div className="mt-8 mb-4 flex justify-center">
+            <Link
+              href="https://ko-fi.com/beer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors text-sm font-medium"
+            >
+              <Heart size={14} strokeWidth={2} />
+              Support on Ko-fi
+            </Link>
+          </div>
+
+          <div className="mt-4 mb-12 text-center">
             <Link
               href="/"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-full hover:bg-primary-600 transition-colors text-sm font-medium"

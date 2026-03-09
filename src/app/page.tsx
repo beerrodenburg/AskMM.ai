@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Link from "next/link";
+import { Heart } from "lucide-react";
 import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { Header } from "@/components/Header";
 import { SearchBar } from "@/components/SearchBar";
@@ -107,6 +109,21 @@ export default function Home() {
               ))}
             </div>
           )}
+
+          {/* Donation note */}
+          {!isCompact && (
+            <p className="mt-5 text-xs text-[var(--muted)] animate-[fadeIn_0.8s_ease-out]">
+              Free to use &middot; Powered by community donations &middot;{" "}
+              <Link
+                href="https://ko-fi.com/beer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-500 hover:underline"
+              >
+                Support on Ko-fi ♥
+              </Link>
+            </p>
+          )}
         </section>
 
         {/* Content area */}
@@ -129,6 +146,24 @@ export default function Home() {
                       <ResultCard result={result} />
                     </div>
                   ))}
+                </div>
+
+                {/* Donation nudge */}
+                <div className="mt-8 p-5 rounded-xl border border-[var(--border-subtle)] text-center">
+                  <Heart size={18} className="text-primary-500 mx-auto mb-2" strokeWidth={1.5} />
+                  <p className="text-sm font-medium text-[var(--foreground)] mb-1">Found this helpful?</p>
+                  <p className="text-xs text-[var(--muted)] mb-4">
+                    AskMM runs entirely on community donations &mdash; no ads, no subscriptions.
+                  </p>
+                  <Link
+                    href="https://ko-fi.com/beer"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-donate"
+                  >
+                    <Heart size={13} strokeWidth={2} />
+                    Support on Ko-fi
+                  </Link>
                 </div>
               </>
             )}

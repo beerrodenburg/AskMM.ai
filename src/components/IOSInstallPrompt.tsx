@@ -82,7 +82,7 @@ export function IOSInstallPrompt({ onDismiss }: IOSInstallPromptProps) {
           <div className="px-6 pb-8 pt-2">
             {/* Header */}
             <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-[#15A06F] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <div className="w-16 h-16 bg-[#06C8D4] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <span className="text-white text-2xl font-bold">MM</span>
               </div>
               <h2 id="ios-install-title" className="text-xl font-semibold text-[var(--foreground)] mb-1">
@@ -97,8 +97,8 @@ export function IOSInstallPrompt({ onDismiss }: IOSInstallPromptProps) {
             <div className="space-y-3">
               {/* Step 1 */}
               <div className="flex items-start gap-4 p-4 bg-[var(--surface)] rounded-xl">
-                <div className="flex-shrink-0 w-10 h-10 bg-[#15A06F]/10 rounded-full flex items-center justify-center">
-                  <ShareIcon className="w-5 h-5 text-[#15A06F]" />
+                <div className="flex-shrink-0 w-10 h-10 bg-[#06C8D4]/10 rounded-full flex items-center justify-center">
+                  <ShareIcon className="w-5 h-5 text-[#06C8D4]" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-[var(--foreground)] mb-0.5">
@@ -112,8 +112,8 @@ export function IOSInstallPrompt({ onDismiss }: IOSInstallPromptProps) {
 
               {/* Step 2 */}
               <div className="flex items-start gap-4 p-4 bg-[var(--surface)] rounded-xl">
-                <div className="flex-shrink-0 w-10 h-10 bg-[#15A06F]/10 rounded-full flex items-center justify-center">
-                  <PlusSquareIcon className="w-5 h-5 text-[#15A06F]" />
+                <div className="flex-shrink-0 w-10 h-10 bg-[#06C8D4]/10 rounded-full flex items-center justify-center">
+                  <PlusSquareIcon className="w-5 h-5 text-[#06C8D4]" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-[var(--foreground)] mb-0.5">
@@ -127,8 +127,8 @@ export function IOSInstallPrompt({ onDismiss }: IOSInstallPromptProps) {
 
               {/* Step 3 */}
               <div className="flex items-start gap-4 p-4 bg-[var(--surface)] rounded-xl">
-                <div className="flex-shrink-0 w-10 h-10 bg-[#15A06F]/10 rounded-full flex items-center justify-center">
-                  <span className="text-[#15A06F] font-semibold text-sm">Add</span>
+                <div className="flex-shrink-0 w-10 h-10 bg-[#06C8D4]/10 rounded-full flex items-center justify-center">
+                  <span className="text-[#06C8D4] font-semibold text-sm">Add</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-[var(--foreground)] mb-0.5">
