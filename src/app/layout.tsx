@@ -16,8 +16,8 @@ export const viewport: Viewport = {
   userScalable: false,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#0F161E" },
+    { media: "(prefers-color-scheme: dark)", color: "#080D14" },
+    { media: "(prefers-color-scheme: light)", color: "#F4FAFB" },
   ],
 };
 
@@ -59,7 +59,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
-        <link rel="mask-icon" href="/icons/icon.svg" color="#15A06F" />
+        <link rel="mask-icon" href="/icons/icon.svg" color="#06C8D4" />
       </head>
       <body className={`${inter.variable} antialiased`}>
         {children}

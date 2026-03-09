@@ -55,7 +55,7 @@ export function SearchBar({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           disabled={disabled}
-          className="w-full pl-12 pr-12 py-3.5 text-base bg-[var(--surface)] text-[var(--foreground)] placeholder:text-[var(--muted)] border border-[var(--border)] rounded-xl focus:outline-none focus:border-primary-400 focus:shadow-[0_0_0_4px_rgba(21,160,111,0.10)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full pl-12 pr-12 py-3.5 text-base bg-[var(--surface)] text-[var(--foreground)] placeholder:text-[var(--muted)] border border-[var(--border)] rounded-xl focus:outline-none focus:border-primary-400 focus:shadow-[0_0_0_4px_rgba(6,200,212,0.15)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Search query"
         />
         <button
