@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback } from "react";
 import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { Header } from "@/components/Header";
 import { SearchBar } from "@/components/SearchBar";
@@ -10,9 +9,6 @@ import { SearchSkeleton } from "@/components/SearchSkeleton";
 import { EmptyState } from "@/components/EmptyState";
 import { ErrorState } from "@/components/ErrorState";
 import { PWAProvider } from "@/components/PWAProvider";
-import { PaywallModal } from "@/components/PaywallModal";
-import { useDeviceId } from "@/hooks/useDeviceId";
-import { useUser } from "@/hooks/useUser";
 import type { SearchResult } from "@/lib/types";
 
 const SUGGESTED_QUERIES = [
@@ -24,42 +20,14 @@ const SUGGESTED_QUERIES = [
   "How long does it take to heal eczema?",
 ];
 
-const SEARCH_LIMIT = 3;
-
 type SearchState = "idle" | "loading" | "results" | "empty" | "error";
 
 export default function Home() {
   const [state, setState] = useState<SearchState>("idle");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [query, setQuery] = useState("");
-  const [showPaywall, setShowPaywall] = useState(false);
-  const [searchesRemaining, setSearchesRemaining] = useState<number | null>(null);
-  const deviceId = useDeviceId();
-  const userEmail = useUser();
-  const router = useRouter();
-
-  // Safety net: Supabase may redirect auth errors to the site URL (/) if the
-  // callback URL isn't in the allowed redirect list. Catch them here and forward
-  // to the appropriate auth page so the user sees a meaningful message.
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    const error = params.get("error");
-    const errorCode = params.get("error_code");
-    // Supabase redirects to the Site URL (/) when the redirectTo isn't in the
-    // allowlist. Forward auth params to the correct pages.
-    if (code) {
-      router.replace(`/auth/reset-password?code=${code}`);
-    } else if (errorCode === "otp_expired") {
-      router.replace("/auth/forgot-password?error=link_expired");
-    } else if (error === "access_denied") {
-      router.replace("/auth/signin?error=auth_failed");
-    }
-  }, [router]);
 
   const search = useCallback(async (q: string) => {
-    if (!deviceId) return;
-
     setQuery(q);
     setState("loading");
     setResults([]);
@@ -67,28 +35,13 @@ export default function Home() {
     try {
       const res = await fetch("/api/search", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Device-ID": deviceId,
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: q }),
       });
-
-      if (res.status === 429) {
-        setState("idle");
-        setShowPaywall(true);
-        setSearchesRemaining(0);
-        return;
-      }
 
       if (!res.ok) throw new Error("Search failed");
 
       const data = await res.json();
-
-      if (data._usage?.remaining != null) {
-        setSearchesRemaining(data._usage.remaining);
-      }
-
       const items: SearchResult[] = data.results ?? [];
 
       if (items.length === 0) {
@@ -100,7 +53,7 @@ export default function Home() {
     } catch {
       setState("error");
     }
-  }, [deviceId]);
+  }, []);
 
   const isCompact = state !== "idle";
 
@@ -110,9 +63,6 @@ export default function Home() {
       <AnnouncementBanner />
       <Header
         onLogoClick={() => { setState("idle"); setQuery(""); setResults([]); }}
-        searchesRemaining={searchesRemaining}
-        searchesLimit={SEARCH_LIMIT}
-        userEmail={userEmail}
       />
 
       <main className="flex-1 flex flex-col">
@@ -189,8 +139,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      {showPaywall && <PaywallModal onClose={() => setShowPaywall(false)} />}
     </div>
     </PWAProvider>
   );
