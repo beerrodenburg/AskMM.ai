@@ -100,7 +100,7 @@ export default function Home() {
                 <button
                   key={q}
                   onClick={() => search(q)}
-                  className="px-3 py-1.5 text-sm text-[var(--muted)] bg-[var(--surface)] border border-[var(--border-subtle)] rounded-full hover:border-[var(--border)] hover:text-[var(--foreground)] transition-all cursor-pointer"
+                  className="px-3 py-1.5 text-sm text-[var(--muted)] bg-[var(--surface)] border border-[var(--border-subtle)] rounded-full hover:border-[var(--border)] hover:text-[var(--foreground)] hover:shadow-sm transition-all cursor-pointer"
                 >
                   {q}
                 </button>

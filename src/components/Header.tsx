@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Heart } from "lucide-react";
 
 interface HeaderProps {
   onLogoClick?: () => void;
@@ -28,9 +29,10 @@ export function Header({ onLogoClick }: HeaderProps) {
           href="https://ko-fi.com/beer"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+          className="btn-donate"
         >
-          Support AskMM
+          <Heart size={13} strokeWidth={2} />
+          Donate
         </Link>
       </nav>
     </header>
