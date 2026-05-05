@@ -290,6 +290,43 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Match-relevance tiers — applied alongside .badge to recolor by score */
+.badge-match-strong {
+  background-color: color-mix(in srgb, var(--color-success) 14%, transparent);
+  color: #86efac;
+  border-color: color-mix(in srgb, var(--color-success) 32%, transparent);
+}
+
+.badge-match-mid {
+  background-color: color-mix(in srgb, var(--color-warning) 14%, transparent);
+  color: #fdba74;
+  border-color: color-mix(in srgb, var(--color-warning) 32%, transparent);
+}
+
+.badge-match-low {
+  background-color: color-mix(in srgb, var(--color-error) 14%, transparent);
+  color: #fca5a5;
+  border-color: color-mix(in srgb, var(--color-error) 32%, transparent);
+}
+
+@media (prefers-color-scheme: light) {
+  .badge-match-strong {
+    background-color: color-mix(in srgb, var(--color-success) 10%, white);
+    color: #15803d;
+    border-color: color-mix(in srgb, var(--color-success) 35%, transparent);
+  }
+  .badge-match-mid {
+    background-color: color-mix(in srgb, var(--color-warning) 10%, white);
+    color: #c2410c;
+    border-color: color-mix(in srgb, var(--color-warning) 38%, transparent);
+  }
+  .badge-match-low {
+    background-color: color-mix(in srgb, var(--color-error) 10%, white);
+    color: #b91c1c;
+    border-color: color-mix(in srgb, var(--color-error) 35%, transparent);
+  }
+}
+
 
 /* ============================================================
    7. ANIMATIONS

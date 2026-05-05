@@ -5,6 +5,7 @@ export interface SearchResult {
   timestampSeconds: number;
   summary: string;
   channelName?: string;
+  relevancy?: number;
 }
 
 export interface SearchResponse {
