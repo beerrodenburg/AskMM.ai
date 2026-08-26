@@ -98,8 +98,8 @@ export default function Home() {
             <div className="text-center mb-8 animate-[fadeIn_0.4s_ease-out]">
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--foreground)] mb-3">
                 {videoCount === null
-                  ? "Search every Medical Medium video, instantly"
-                  : `Search ${videoCount.toLocaleString("en-US")} Medical Medium videos, instantly`}
+                  ? "Search answers across every Medical Medium video"
+                  : `Search answers across ${videoCount.toLocaleString("en-US")} Medical Medium videos`}
               </h1>
               <p className="text-base text-[var(--muted)] max-w-md mx-auto">
                 Ask a question and get answers pulled directly from
