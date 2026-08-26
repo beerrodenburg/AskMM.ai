@@ -1,4 +1,5 @@
 import { after, NextRequest, NextResponse } from "next/server";
+import { deriveOutcome } from "@/lib/search-log";
 import { logSearch } from "@/lib/search-log-writer";
 
 export const maxDuration = 30;
@@ -40,16 +41,26 @@ export async function POST(request: NextRequest) {
       // sessionId is the literal "search" by contract with the n8n workflow.
       // The real per-visit id is used for logging only.
       body: JSON.stringify({ message: query, sessionId: "search" }),
+      // 25s, comfortably under maxDuration = 30: the route has to outlive its
+      // own abort to log it. A platform timeout runs neither the catch nor
+      // after(), so a hung n8n would lose exactly the rows worth having.
+      // Visible side effect: the client sees our 500, not a Vercel 504.
+      signal: AbortSignal.timeout(25_000),
     });
 
     if (!response.ok) {
+      // Elapsed time is read here, not inside after(): after() runs once the
+      // response has finished streaming, so measuring in the closure would
+      // fold the client's download speed into duration_ms.
+      const durationMs = Date.now() - startedAt;
+
       after(() =>
         logSearch({
           query,
           sessionId,
           source,
           status: "error",
-          durationMs: Date.now() - startedAt,
+          durationMs,
           error: `n8n responded ${response.status}`,
         })
       );
@@ -61,32 +72,38 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
-    const resultCount = Array.isArray(data?.results) ? data.results.length : 0;
+    const durationMs = Date.now() - startedAt;
+    const outcome = deriveOutcome(data);
 
     after(() =>
       logSearch({
         query,
         sessionId,
         source,
-        status: resultCount > 0 ? "ok" : "empty",
-        resultCount,
-        durationMs: Date.now() - startedAt,
+        durationMs,
+        status: outcome.status,
+        resultCount: outcome.resultCount,
+        error: outcome.error,
       })
     );
 
+    // Unchanged: a malformed body still reaches the browser exactly as before.
+    // Only the logged classification distinguishes it from a genuine `empty`.
     return NextResponse.json(data);
   } catch (err) {
     // Covers a malformed request body, an unreachable webhook, and a timeout.
     // A search that never reached n8n is exactly the kind worth recording, so
     // this path logs too — but only once we know there was a query to log.
     if (query) {
+      const durationMs = Date.now() - startedAt;
+
       after(() =>
         logSearch({
           query,
           sessionId,
           source,
           status: "error",
-          durationMs: Date.now() - startedAt,
+          durationMs,
           error: err instanceof Error ? err.message : "unknown error",
         })
       );
