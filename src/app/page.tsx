@@ -11,6 +11,7 @@ import { SearchSkeleton } from "@/components/SearchSkeleton";
 import { EmptyState } from "@/components/EmptyState";
 import { ErrorState } from "@/components/ErrorState";
 import { PWAProvider } from "@/components/PWAProvider";
+import { getSessionId } from "@/lib/session";
 import type { SearchResult } from "@/lib/types";
 
 const SUGGESTED_QUERIES = [
@@ -49,17 +50,18 @@ export default function Home() {
     };
   }, []);
 
-  const search = useCallback(async (q: string) => {
-    setQuery(q);
-    setState("loading");
-    setResults([]);
+  const search = useCallback(
+    async (q: string, source: "typed" | "chip" = "typed") => {
+      setQuery(q);
+      setState("loading");
+      setResults([]);
 
-    try {
-      const res = await fetch("/api/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: q }),
-      });
+      try {
+        const res = await fetch("/api/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: q, sessionId: getSessionId(), source }),
+        });
 
       if (!res.ok) throw new Error("Search failed");
 
@@ -123,7 +125,7 @@ export default function Home() {
               {SUGGESTED_QUERIES.map((q) => (
                 <button
                   key={q}
-                  onClick={() => search(q)}
+                  onClick={() => search(q, "chip")}
                   className="px-3 py-1.5 text-sm text-[var(--muted)] bg-[var(--surface)] border border-[var(--border-subtle)] rounded-full hover:border-[var(--border)] hover:text-[var(--foreground)] hover:shadow-sm transition-all cursor-pointer"
                 >
                   {q}
