@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { AnnouncementBanner } from "@/components/AnnouncementBanner";
@@ -28,6 +28,26 @@ export default function Home() {
   const [state, setState] = useState<SearchState>("idle");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [query, setQuery] = useState("");
+  const [videoCount, setVideoCount] = useState<number | null>(null);
+
+  // Null until it lands (and if it never does), which keeps the headline on
+  // its "every video" wording rather than ever showing a wrong number.
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/api/video-count")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!cancelled && typeof data?.count === "number") {
+          setVideoCount(data.count);
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const search = useCallback(async (q: string) => {
     setQuery(q);
@@ -77,7 +97,9 @@ export default function Home() {
           {!isCompact && (
             <div className="text-center mb-8 animate-[fadeIn_0.4s_ease-out]">
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--foreground)] mb-3">
-                Search every Medical Medium video, instantly
+                {videoCount === null
+                  ? "Search every Medical Medium video, instantly"
+                  : `Search ${videoCount.toLocaleString("en-US")} Medical Medium videos, instantly`}
               </h1>
               <p className="text-base text-[var(--muted)] max-w-md mx-auto">
                 Ask a question and get answers pulled directly from
