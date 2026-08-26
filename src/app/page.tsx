@@ -77,7 +77,7 @@ export default function Home() {
       } catch {
         setState("error");
       }
-  }, []);
+    }, []);
 
   const isCompact = state !== "idle";
 
