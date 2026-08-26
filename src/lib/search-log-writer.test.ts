@@ -59,12 +59,46 @@ describe("logSearch", () => {
     await expect(logSearch(OK_INPUT)).resolves.toBeUndefined();
   });
 
-  it("swallows a non-2xx response", async () => {
+  it("swallows a non-2xx response but warns about it", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue(new Response("forbidden", { status: 403 }))
     );
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     await expect(logSearch(OK_INPUT)).resolves.toBeUndefined();
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    const message = warn.mock.calls[0].join(" ");
+    expect(message).toContain("403");
+    expect(message).toContain("forbidden");
+    // Never the credential, the headers, or the row itself.
+    expect(message).not.toContain("test-service-key");
+
+    warn.mockRestore();
+  });
+
+  it("warns even when the error body cannot be read", async () => {
+    const unreadable = new Response("", { status: 500 });
+    Object.defineProperty(unreadable, "text", {
+      value: () => Promise.reject(new Error("stream broken")),
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(unreadable));
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    await expect(logSearch(OK_INPUT)).resolves.toBeUndefined();
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    warn.mockRestore();
+  });
+
+  it("stays silent on a 2xx response", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("", { status: 201 })));
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    await logSearch(OK_INPUT);
+
+    expect(warn).not.toHaveBeenCalled();
+    warn.mockRestore();
   });
 });

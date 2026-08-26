@@ -17,7 +17,7 @@ export async function logSearch(input: SearchLogInput): Promise<void> {
   if (!url || !key) return;
 
   try {
-    await fetch(`${url}/rest/v1/searches`, {
+    const res = await fetch(`${url}/rest/v1/searches`, {
       method: "POST",
       headers: {
         apikey: key,
@@ -28,6 +28,15 @@ export async function logSearch(input: SearchLogInput): Promise<void> {
       },
       body: JSON.stringify(buildSearchLogRow(input)),
     });
+
+    // A missing grant, a revoked key or a CHECK violation all come back as a
+    // perfectly ordinary response, so without this the only symptom would be
+    // an empty table. Warn on the failure path only, and never include the
+    // key, the headers or the row.
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      console.warn(`[search-log] insert failed: ${res.status} ${detail}`);
+    }
   } catch {
     // Deliberately empty. See the doc comment.
   }
