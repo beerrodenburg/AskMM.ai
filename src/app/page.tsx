@@ -63,20 +63,20 @@ export default function Home() {
           body: JSON.stringify({ message: q, sessionId: getSessionId(), source }),
         });
 
-      if (!res.ok) throw new Error("Search failed");
+        if (!res.ok) throw new Error("Search failed");
 
-      const data = await res.json();
-      const items: SearchResult[] = data.results ?? [];
+        const data = await res.json();
+        const items: SearchResult[] = data.results ?? [];
 
-      if (items.length === 0) {
-        setState("empty");
-      } else {
-        setResults(items);
-        setState("results");
+        if (items.length === 0) {
+          setState("empty");
+        } else {
+          setResults(items);
+          setState("results");
+        }
+      } catch {
+        setState("error");
       }
-    } catch {
-      setState("error");
-    }
   }, []);
 
   const isCompact = state !== "idle";
