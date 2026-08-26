@@ -4,7 +4,11 @@
 export type SearchSource = "typed" | "chip";
 export type SearchStatus = "ok" | "empty" | "error";
 
-/** Matches the `text` columns in pipeline/sql/003_searches.sql. */
+/**
+ * Application-side cap on the two free-text columns of `searches`
+ * (pipeline/sql/004_searches.sql). The SQL columns are unbounded `text`; this
+ * limit exists only so a pathological payload cannot bloat the table.
+ */
 const MAX_TEXT = 500;
 
 const UUID_RE =
@@ -57,6 +61,38 @@ export function buildSearchLogRow(input: SearchLogInput): SearchLogRow {
     result_count:
       typeof input.resultCount === "number" ? input.resultCount : null,
     duration_ms: Math.round(input.durationMs),
-    error: input.error ? truncate(input.error) : null,
+    // typeof, not truthiness: new Error("") must still record an `error` row
+    // with an empty reason rather than silently becoming null.
+    error: typeof input.error === "string" ? truncate(input.error) : null,
+  };
+}
+
+export interface SearchOutcome {
+  status: SearchStatus;
+  resultCount: number | null;
+  error: string | null;
+}
+
+/**
+ * Classifies an n8n response body. Anything without a real `results` array is
+ * an `error`, never an `empty`: `empty` rows are the questions the corpus
+ * could not answer and are the highest-value rows in the table, so an
+ * unusable response must never be filed among them.
+ */
+export function deriveOutcome(data: unknown): SearchOutcome {
+  const results = (data as { results?: unknown } | null | undefined)?.results;
+
+  if (!Array.isArray(results)) {
+    return {
+      status: "error",
+      resultCount: null,
+      error: "n8n returned no results array",
+    };
+  }
+
+  return {
+    status: results.length > 0 ? "ok" : "empty",
+    resultCount: results.length,
+    error: null,
   };
 }

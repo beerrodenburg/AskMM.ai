@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildSearchLogRow } from "./search-log";
+import { buildSearchLogRow, deriveOutcome } from "./search-log";
 
 const VALID_UUID = "3f2504e0-4f89-11d3-9a0c-0305e82c3301";
 
@@ -130,5 +130,106 @@ describe("buildSearchLogRow", () => {
     });
 
     expect(row.duration_ms).toBe(1841);
+  });
+  it("keeps an empty-string error as an error rather than null", () => {
+    const row = buildSearchLogRow({
+      query: "q",
+      status: "error",
+      durationMs: 1,
+      error: "",
+    });
+
+    expect(row.error).toBe("");
+  });
+});
+
+describe("deriveOutcome", () => {
+  it("reports ok with the result count when n8n returns results", () => {
+    expect(deriveOutcome({ results: [{ a: 1 }, { a: 2 }, { a: 3 }] })).toEqual({
+      status: "ok",
+      resultCount: 3,
+      error: null,
+    });
+  });
+
+  it("reports ok for exactly one result", () => {
+    expect(deriveOutcome({ results: [{ a: 1 }] })).toEqual({
+      status: "ok",
+      resultCount: 1,
+      error: null,
+    });
+  });
+
+  it("reports empty for a successful response with zero results", () => {
+    expect(deriveOutcome({ answerSummary: "", results: [] })).toEqual({
+      status: "empty",
+      resultCount: 0,
+      error: null,
+    });
+  });
+
+  it("reports error, not empty, when results is missing", () => {
+    expect(deriveOutcome({ answerSummary: "something" })).toEqual({
+      status: "error",
+      resultCount: null,
+      error: "n8n returned no results array",
+    });
+  });
+
+  it("reports error when results is a string", () => {
+    expect(deriveOutcome({ results: "none" })).toEqual({
+      status: "error",
+      resultCount: null,
+      error: "n8n returned no results array",
+    });
+  });
+
+  it("reports error when results is null", () => {
+    expect(deriveOutcome({ results: null })).toEqual({
+      status: "error",
+      resultCount: null,
+      error: "n8n returned no results array",
+    });
+  });
+
+  it("reports error when the body is null", () => {
+    expect(deriveOutcome(null)).toEqual({
+      status: "error",
+      resultCount: null,
+      error: "n8n returned no results array",
+    });
+  });
+
+  it("reports error when the body is undefined", () => {
+    expect(deriveOutcome(undefined)).toEqual({
+      status: "error",
+      resultCount: null,
+      error: "n8n returned no results array",
+    });
+  });
+
+  it("reports error when the body is a bare string", () => {
+    expect(deriveOutcome("Workflow could not be started")).toEqual({
+      status: "error",
+      resultCount: null,
+      error: "n8n returned no results array",
+    });
+  });
+
+  it("reports error when the body is a number", () => {
+    expect(deriveOutcome(0)).toEqual({
+      status: "error",
+      resultCount: null,
+      error: "n8n returned no results array",
+    });
+  });
+
+  it("feeds straight into a row the builder accepts", () => {
+    const outcome = deriveOutcome({ results: [] });
+    const row = buildSearchLogRow({ query: "q", durationMs: 5, ...outcome });
+
+    expect(row.status).toBe("empty");
+    expect(row.result_count).toBe(0);
+    expect(row.error).toBeNull();
   });
 });
